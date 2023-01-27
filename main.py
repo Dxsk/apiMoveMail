@@ -7,12 +7,12 @@ from movemail.settings import (
 
 if __name__ == '__main__':
 
+    reload: bool = False
+    log_level: str = 'error'
+    
     if app.get('debug'):
         reload: bool = True
         log_level: str = 'info'
-    else:
-        reload: bool = False
-        log_level: str = 'error'
     
     uvicorn.run(
         "movemail:api",
