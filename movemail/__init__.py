@@ -31,7 +31,7 @@ api.add_middleware(
 @api.post('/')
 def move_mail(
     response: Response,
-    identify: dict = Body(
+    identity: dict = Body(
         media_type='application/json',
     ),
 ):
@@ -43,21 +43,21 @@ def move_mail(
     
     :return: {"Information message"}
     """
-    identify = identify.get('identify')
+    identity = identity.get('identity')
     response.content = {'No mail found.'}
     response.status_code = 404
 
-    if identify:
-        mail = ExchangeConnector()
-        mail.identify = identify
+    if identity:
+        exchange = ExchangeConnector()
+        exchange.identify = identify
         
         # Check, if the mails are fetched and the mail has been moved.
-        if mail.get_all() and mail.move_to_right_folder():
+        if exchange.get_all() and exchange.move_to_right_folder():
             response.content = {'Mail correctly moved.'}
             response.status_code = 200
         else:
             # Otherwise set the 'mails' variable to None.
             # Because a lot of mail can be loaded
-            mail.mails = None
+            exchange.mails = None
 
     return "{}".format(response.content)
