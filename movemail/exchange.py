@@ -10,7 +10,7 @@ from .settings import email
 class ExchangeConnector:
     
     def __init__(self):
-        self.identify: str = ''
+        self.identity: str = ''
         self.login: str = email.get('login')
         self.password: str = email.get('password')
         self.credentials: Credentials = Credentials(
@@ -44,7 +44,7 @@ class ExchangeConnector:
         response = False
         to_folder = self.account.inbox / 'test'  # Hard written folder for the POC
         if self.mails:
-            for mail in self.mails.filter(subject__contains=self.identify):
+            for mail in self.mails.filter(subject__contains=self.identity):
                 mail.move(to_folder=to_folder)
                 response = True
         
